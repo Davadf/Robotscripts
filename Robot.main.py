@@ -1,12 +1,20 @@
-from gpiozero import Robot, Button
+# My program for my Robot with Light, Buzzer, and later sensors
+# Made by David github: Davadf
+
+from gpiozero import LED
 from signal import pause
-from signal import pause
-
+from time import sleep
 from gpiozero import Robot, Button
+from gpiozero import Buzzer
 
-#motor1 = Motor(, )
-#motor2 = Motor(, )
+# motor1 = Motor(, )
+# motor2 = Motor(, )
 
+# buzzer config
+buzzer = Buzzer(18)
+
+#Led config
+led = LED(17)
 
 # Motor pin config
 robot = Robot(left=(4, 14), right=(17, 18))
@@ -16,10 +24,14 @@ left = Button(26)
 right = Button(16)
 fw = Button(21)
 bw = Button(20)
+bz = Button(27)
+
+print('Made by David')
 
 # forward
 fw.when_pressed = robot.forward
 fw.when_released = robot.stop
+
 
 # left
 left.when_pressed = robot.left
@@ -29,8 +41,25 @@ left.when_released = robot.stop
 right.when_pressed = robot.right
 right.when_released = robot.stop
 
+
 # backward
 bw.when_pressed = robot.backward
 bw.when_released = robot.stop
+
+# buzzer
+bz.when_held = buzzer.on()
+sleep(1)
+buzzer.off()
+sleep(1)
+
+
+
+#Led control
+right.when_pressed = led.on()
+right.when_released = led.off()
+left.when_pressed = led.on()
+left.when_released = led.off()
+fw.when_pressed = led.on()
+fw.when_released = led.off()
 
 pause()
