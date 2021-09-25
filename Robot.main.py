@@ -1,11 +1,12 @@
 # My program for my Robot with Light, Buzzer, and later sensors
 # Made by David github: Davadf
 
-from gpiozero import LED
-from signal import pause
 from time import sleep
-from gpiozero import Robot, Button
+
 from gpiozero import Buzzer
+from gpiozero import DistanceSensor
+from gpiozero import LED
+from gpiozero import Robot, Button
 
 # motor1 = Motor(, )
 # motor2 = Motor(, )
@@ -13,8 +14,11 @@ from gpiozero import Buzzer
 # buzzer config
 buzzer = Buzzer(18)
 
-#Led config
+# Led config
 led = LED(17)
+
+# sensor config
+sensor = DistanceSensor(echo=10, trigger=11, threshold_distance=0.1)
 
 # Motor pin config
 robot = Robot(left=(4, 14), right=(17, 18))
@@ -32,7 +36,6 @@ print('Made by David')
 fw.when_pressed = robot.forward
 fw.when_released = robot.stop
 
-
 # left
 left.when_pressed = robot.left
 left.when_released = robot.stop
@@ -40,7 +43,6 @@ left.when_released = robot.stop
 # right
 right.when_pressed = robot.right
 right.when_released = robot.stop
-
 
 # backward
 bw.when_pressed = robot.backward
@@ -52,9 +54,13 @@ sleep(1)
 buzzer.off()
 sleep(1)
 
+# sensor
+while True:
+    print(sensor)
+    sensor.wait_for_in_range(robot.right())
+    print('collision incomming')
 
-
-#Led control
+# Led control
 right.when_pressed = led.on()
 right.when_released = led.off()
 left.when_pressed = led.on()
