@@ -4,7 +4,7 @@
 # TODO https://open.spotify.com/playlist/37i9dQZF1E4vQNrG1vfweo
 
 from time import sleep
-
+from gpiozero import LightSensor
 from gpiozero import Buzzer
 from gpiozero import DistanceSensor
 from gpiozero import LED
@@ -22,9 +22,13 @@ buzzer = Buzzer(18)
 
 # Led config
 led = LED(17)
+lamp = LED(18)
 
 # sensor config
 sensor = DistanceSensor(echo=10, trigger=11, threshold_distance=0.1)
+
+# light sensor config
+ldr = LightSensor(18)
 
 # Motor pin config
 robot = Robot(left=(4, 14), right=(17, 18))
